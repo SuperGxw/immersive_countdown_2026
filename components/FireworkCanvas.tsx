@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
-import { audioService } from '../services/audioService.ts';
+import { audioService } from '../services/audioService';
 
 /**
  * 烟花模块接口定义
