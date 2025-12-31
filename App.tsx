@@ -16,19 +16,19 @@ const App: React.FC = () => {
   const [countdown, setCountdown] = useState(10);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [memories, setMemories] = useState<string[]>([]);
-  
+
   const fireworkRef = useRef<FireworkCanvasHandle>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const timeRemaining = useMemo(() => {
     const diff = TARGET_DATE.getTime() - currentTime.getTime();
     if (diff <= 0) return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
-    
+
     const seconds = Math.floor((diff / 1000) % 60);
     const minutes = Math.floor((diff / 1000 / 60) % 60);
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    
+
     return { total: diff, days, hours, minutes, seconds };
   }, [currentTime]);
 
@@ -64,7 +64,7 @@ const App: React.FC = () => {
   useEffect(() => {
     let timer: number;
     if (state === AppState.COUNTDOWN && countdown > 0) {
-      if (countdown < 10) audioService.playTick(countdown); 
+      if (countdown < 10) audioService.playTick(countdown);
       timer = window.setInterval(() => setCountdown(prev => prev - 1), 1000);
     } else if (state === AppState.COUNTDOWN && countdown === 0) {
       handleCelebrate();
@@ -88,12 +88,12 @@ const App: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       onClick={handleScreenClick}
       className={`relative min-h-screen bg-black text-white flex flex-col items-center justify-center overflow-hidden ${state === AppState.CELEBRATING ? 'cursor-crosshair' : ''}`}
     >
       <ParticleBackground />
-      
+
       {state === AppState.CELEBRATING && (
         <>
           <FireworkCanvas ref={fireworkRef} />
@@ -101,24 +101,24 @@ const App: React.FC = () => {
         </>
       )}
 
-      {/* 按钮组：移动端位于底部居中，桌面端位于右上角 */}
+      {/* 按钮组：移动端位于顶部居中，桌面端位于右上角 */}
       {state === AppState.IDLE && (
-        <div className="fixed bottom-12 md:top-6 md:right-6 md:bottom-auto left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 z-[60] flex flex-row md:flex-col items-center md:items-end gap-4">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 md:top-6 md:right-6 md:bottom-auto md:left-auto md:translate-x-0 z-[60] flex flex-row md:flex-col items-center md:items-end gap-3 md:gap-4">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={(e) => { e.stopPropagation(); startCountdown(); }}
-            className="flex items-center justify-center gap-2 w-36 md:w-44 py-2.5 md:py-3 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 rounded-full transition-all group backdrop-blur-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]"
+            className="flex items-center justify-center gap-2 w-32 md:w-44 py-2 md:py-3 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 rounded-full transition-all group backdrop-blur-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]"
           >
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.4em] text-yellow-500 group-hover:text-yellow-400 uppercase">Start</span>
-            <FastForward className="w-3.5 h-3.5 md:w-4 md:h-4 text-yellow-500" />
+            <span className="text-[9px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.4em] text-yellow-500 group-hover:text-yellow-400 uppercase">Start</span>
+            <FastForward className="w-3 h-3 md:w-4 md:h-4 text-yellow-500" />
           </motion.button>
 
-          <input 
-            type="file" 
-            multiple 
-            accept="image/*" 
-            className="hidden" 
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="hidden"
             ref={fileInputRef}
             onChange={handleFileChange}
           />
@@ -150,8 +150,8 @@ const App: React.FC = () => {
             className="z-50 text-center space-y-10 p-6 w-full max-w-5xl"
           >
             <div className="space-y-4">
-              <motion.div 
-                animate={{ y: [0, -15, 0] }} 
+              <motion.div
+                animate={{ y: [0, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                 className="flex justify-center mb-4"
               >
@@ -188,11 +188,11 @@ const App: React.FC = () => {
         )}
 
         {state === AppState.COUNTDOWN && (
-          <motion.div 
-            key="countdown" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ scale: 4, opacity: 0, filter: 'blur(60px)' }} 
+          <motion.div
+            key="countdown"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ scale: 4, opacity: 0, filter: 'blur(60px)' }}
             transition={{ duration: 1 }}
             className="z-50"
           >
@@ -210,12 +210,12 @@ const App: React.FC = () => {
           >
             <div className="space-y-4 md:space-y-6">
               <div className="relative inline-block">
-                <motion.div 
-                   animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.1, 1] }}
-                   transition={{ duration: 4, repeat: Infinity }}
-                   className="absolute -inset-10 blur-3xl bg-yellow-400/10 rounded-full" 
+                <motion.div
+                  animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute -inset-10 blur-3xl bg-yellow-400/10 rounded-full"
                 />
-                <motion.h1 
+                <motion.h1
                   className="relative text-6xl sm:text-7xl md:text-[7.5rem] font-black tracking-tighter gradient-text-gold drop-shadow-[0_10px_30px_rgba(234,179,8,0.3)]"
                   initial={{ scale: 0.8, y: 20 }}
                   animate={{ scale: 1, y: 0 }}
@@ -224,9 +224,9 @@ const App: React.FC = () => {
                   2026
                 </motion.h1>
               </div>
-              
+
               <div className="space-y-4">
-                <motion.h2 
+                <motion.h2
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
@@ -244,7 +244,7 @@ const App: React.FC = () => {
                   {FIXED_BLESSING}
                 </motion.p>
               </div>
-              
+
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} className="pt-20 pointer-events-auto">
                 <button
                   onClick={reset}
