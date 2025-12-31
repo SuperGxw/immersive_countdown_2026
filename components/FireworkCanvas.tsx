@@ -31,7 +31,7 @@ class Particle {
     const speed = Math.random() * 8 + 2;
     this.vx = Math.cos(angle) * speed;
     this.vy = Math.sin(angle) * speed;
-    
+
     this.alpha = 1;
     this.color = color;
     this.gravity = 0.12;    // 重力感
@@ -84,15 +84,15 @@ class Firework {
     this.x = opts.startX ?? Math.random() * (width * 0.8) + (width * 0.1);
     this.y = height;
     this.targetY = opts.targetY ?? (Math.random() * height * 0.4 + height * 0.1);
-    
+
     const hue = Math.random() * 360;
     this.color = `hsl(${hue}, 100%, 65%)`;
     this.particles = [];
     this.isExploded = false;
-    
+
     // 向上发射的速度初值
     const distance = height - this.targetY;
-    this.vy = -Math.sqrt(2 * 0.15 * distance); 
+    this.vy = -Math.sqrt(2 * 0.15 * distance);
   }
 
   update(isUnmounting: boolean) {
@@ -121,7 +121,7 @@ class Firework {
     // 计算声音方位 (Pan: -1 左, 1 右)
     const pan = (this.x / this.canvasWidth) * 2 - 1;
     audioService.playExplosion(pan);
-    
+
     // 生成爆炸粒子束
     const count = 100 + Math.floor(Math.random() * 50);
     for (let i = 0; i < count; i++) {
@@ -158,8 +158,8 @@ const FireworkCanvas = forwardRef<FireworkCanvasHandle, {}>((_, ref) => {
     launchAt: (x: number, y: number) => {
       if (canvasRef.current && !isUnmountingRef.current) {
         fireworksRef.current.push(new Firework(
-          canvasRef.current.width, 
-          canvasRef.current.height, 
+          canvasRef.current.width,
+          canvasRef.current.height,
           { startX: x, targetY: y }
         ));
       }
@@ -187,12 +187,12 @@ const FireworkCanvas = forwardRef<FireworkCanvasHandle, {}>((_, ref) => {
       ctx.globalCompositeOperation = 'destination-out';
       ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
+
       // 粒子融合效果
       ctx.globalCompositeOperation = 'lighter';
 
       // 随机背景环境烟花 (低频率自动发射)
-      if (Math.random() < 0.03) {
+      if (Math.random() < 0.05) {
         fireworksRef.current.push(new Firework(canvas.width, canvas.height, {}));
       }
 
@@ -220,9 +220,9 @@ const FireworkCanvas = forwardRef<FireworkCanvasHandle, {}>((_, ref) => {
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="fixed inset-0 z-10 pointer-events-none opacity-90" 
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 z-10 pointer-events-none opacity-90"
       style={{ filter: 'contrast(1.1) brightness(1.2)' }} // 进一步增强视觉冲击力
     />
   );
