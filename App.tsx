@@ -108,10 +108,10 @@ const App: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={(e) => { e.stopPropagation(); startCountdown(); }}
-            className="flex items-center justify-center gap-2 w-32 md:w-44 py-2 md:py-3 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 rounded-full transition-all group backdrop-blur-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]"
+            className="flex items-center justify-center gap-2 w-36 md:w-44 py-2.5 md:py-3 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 rounded-full transition-all group backdrop-blur-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]"
           >
-            <span className="text-[9px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.4em] text-yellow-500 group-hover:text-yellow-400 uppercase">Start</span>
-            <FastForward className="w-3 h-3 md:w-4 md:h-4 text-yellow-500" />
+            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.4em] text-yellow-500 group-hover:text-yellow-400 uppercase">Start</span>
+            <FastForward className="w-3.5 h-3.5 md:w-4 md:h-4 text-yellow-500" />
           </motion.button>
 
           <input
